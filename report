@@ -1,0 +1,39 @@
+   This is an implementation of the Banker's Algorithm for resource allocation, a deadlock avoidance algorithm.
+
+* The program prompts the user to input the number of processes and resources, as well as the currently available 
+
+   resources and the maximum required resources for each process. Then it calculates the need matrix and checks if 
+
+   there is a safe sequence that can be used to avoid deadlock. If there is a safe sequence, the program executes 
+
+   the processes using threads.
+
+* The "getSafeSeq()" function returns "true" if a safe sequence is found, and "false" otherwise. It works by using a 
+
+   temporary array "tempRes" to store the currently available resources and setting all the processes to be unfinished.
+
+   It then loops until all processes have finished. In each iteration, it checks if there is a process that can be finished 
+
+   safely (i.e., its need is less than or equal to the available resources), and if so, it adds its allocated resources to 
+ 
+   the available resources, marks the process as finished, and adds it to the safe sequence. If no process can be finished 
+
+   safely, it returns "false" to indicate that there is no safe sequence.
+
+* The "processCode()" function is the function that is executed by each thread. It takes an argument "arg" that is a pointer to 
+
+  the index of the process that the thread represents. The function first locks the "lockResources" mutex, and then waits until 
+
+  it is the turn of this process to run (i.e., its index is equal to "getsafeSeq[nProcessRan])". Once it is its turn, it simulates 
+
+  the process by sleeping for a random amount of time between 1 and 3 seconds, and then releases the resources that it was allocated. 
+
+  Finally, it increments "nProcessRan", broadcasts the condition variable "condition", and unlocks the "lockResources" mutex to allow 
+
+  the next process to run.
+
+* Overall, this implementation of the Banker's Algorithm is correct and should work for any valid input. However, it could be improved 
+
+ in various ways, such as by using a data structure to represent the processes and their allocated and required resources instead of using 
+
+ separate arrays, or by adding error checking for invalid input.
